@@ -218,6 +218,8 @@ a{
 	position: absolute;       
     text-align: center;  
     color: #fff;
+    width: 380px;    
+    backdrop-filter: none;
     filter: drop-shadow(5px 5px 5px #000);
 }
 
