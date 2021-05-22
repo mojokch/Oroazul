@@ -44,6 +44,7 @@ body
     margin-left: -200px;
     backdrop-filter: blur(3px);
     color: #fff;
+    filter: drop-shadow(5px 5px 5px #000);
 }
 
 .bloque-inicio a {
@@ -214,14 +215,10 @@ a{
 
 
 .bloque-inicio{
-	position: absolute;
-    top: 30%;
-    left: 40%;
-    width: ;   
-    text-align: center;
-    margin-left: -160px;    
+	position: absolute;       
+    text-align: center;  
     color: #fff;
-    filter: none;
+    filter: drop-shadow(5px 5px 5px #000);
 }
 
 .slider img {
