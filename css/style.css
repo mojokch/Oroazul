@@ -1,7 +1,15 @@
+* {
+    box-sizing: border-box;
+}
 body
 {
 	font-family: "Roboto";	
 	background: linear-gradient(0.25turn, #81DAF5, #fff);
+}
+
+.container {
+	padding:  15px
+
 }
 
 .logo {
@@ -27,14 +35,37 @@ body
 	transition-duration: 0.6s;
 	}
 
+.bloque-inicio {
+	position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 400px;
+    text-align: center;
+    margin-left: -200px;
+    backdrop-filter: blur(3px);
+    color: #fff;
+}
+
+.bloque-inicio a {
+	color: #fff;
+	background-color: #81DAF5;
+	font-size: 20px;
+	font-weight: bold;
+	border-radius: 10%;
+	text-align: center;
+	text-decoration: none;
+	padding: 10px 10px;
+	border: none;
+}
+
 h1
 {
-	color: #000;
+	color: #fff;
 	font-size: 50px;	
 }
 h1 b
 {
-	color: #000;
+	color: #fff;
 	font-size: 50px;	
 }
 
@@ -86,6 +117,29 @@ h1 b:hover
 	100% {margin-left: -300%}
 }
 
+.svglogo{
+	width: 100%
+}
+
+.row {
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    display: flex;
+}
+
+.clientes-container img {
+    width: 150px;
+    margin: 10px;
+      
+}
+
+.clientes-container img:hover {
+    width: 150px;
+    margin: 10px;
+    transition: 0.4s;
+	filter: drop-shadow(5px 5px 5px #666);    
+}
 
 
 
@@ -153,5 +207,50 @@ a{
 	color: #000;
 	text-decoration: none;
 }
-//empesar responsive:
-@media(max-width: 780px)
+
+
+
+@media (max-width: 869px){
+
+
+.bloque-inicio{
+	position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 400px;
+    text-align: center;
+    margin-left: -200px;
+    backdrop-filter: blur(3px);
+    color: #fff;
+}
+
+.slider img {
+	width: 100%;
+	display: block;
+	top: 83px;
+	height: 100vh;
+	}
+
+
+
+
+@keyframes cambio {
+	0% {margin-left: 0;}
+	20% {margin-left: 0;}
+
+	25% {margin-left: -100%}
+	45% {margin-left: -100%}
+
+	50% {margin-left: -200%}
+	70% {margin-left: -200%}
+
+	80% {margin-left: -300%}
+	100% {margin-left: -300%}
+}
+
+
+
+
+
+
+}
