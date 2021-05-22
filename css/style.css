@@ -216,13 +216,12 @@ a{
 .bloque-inicio{
 	position: absolute;
     top: 30%;
-    left: 50%;
-    width: auto;
-    padding: 10px;
+    left: 40%;
+    width: auto;   
     text-align: center;
-    margin-left: -160px;
-    
+    margin-left: -160px;    
     color: #fff;
+    filter: none;
 }
 
 .slider img {
