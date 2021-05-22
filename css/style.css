@@ -217,10 +217,11 @@ a{
 	position: absolute;
     top: 30%;
     left: 50%;
-    width: 400px;
+    width: auto;
+    padding: 10px;
     text-align: center;
-    margin-left: -200px;
-    backdrop-filter: blur(3px);
+    margin-left: -160px;
+    
     color: #fff;
 }
 
