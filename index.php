@@ -123,7 +123,7 @@
 							</li>						
 						</ul>
 								<div class="clientes-container">
-								<a href="img/logohg.png"></a>	
+								<a href="https://api.whatsapp.com/send?phone=524499083119&text=HOLA!%20Me%20gustar%C3%ADa%20mi%20propia%20pagina%20web"><img src="img/logohg.png"></a>	
 								</div>	
 					</div>
 	</footer>
