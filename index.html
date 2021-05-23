@@ -90,7 +90,7 @@
 					<div class="clientes-container">
 						<img src="img/cliente (10).png">						
 					</div>
-					
+
 				</div>
 				
 			</div>
@@ -120,8 +120,11 @@
 								<a href="https://api.whatsapp.com/send?phone=524499083119&text=Hola%20este%20mensaje%20es%20de%20prueba%20" target="_blank" class="whats">
 									<i class="fab fa-whatsapp-square"></i>
 									</a>
-							</li>
+							</li>						
 						</ul>
+								<div class="clientes-container">
+								<a href="img/logohg.png"></a>	
+								</div>	
 					</div>
 	</footer>
 
