@@ -7,6 +7,53 @@ body
 	background: linear-gradient(0.25turn, #81DAF5, #fff);
 }
 
+header
+{
+	padding: 15px 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;	
+	width: 100%;
+}
+
+header .container
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	backdrop-filter: blur(1px); 
+	background-color: #fff;
+	top: -10px;
+}
+
+
+
+header .container nav a
+{
+	color: #3A64FF;
+	text-decoration: none;
+	margin: 0 15px;
+	font-size: 25px;
+
+}
+
+header .container nav a:hover
+{
+	color: #7da8FF;
+	text-decoration: none;
+	margin: 0 15px;
+	font-size: 30px;
+
+}
+
+
+header .container .hamb
+{
+	display: none;
+	position: relative;
+}
+
 .container {
 	padding:  15px
 
@@ -25,19 +72,25 @@ body
 }
 
 .logo-gota {
-	width: 200px;
+	width: 230px;
 	filter: drop-shadow(1px 1px 1px #000);
 }
 
 .logo-gota:hover {
-	width: 210px;
+	width: 250px;
 	filter: drop-shadow(5px 5px 5px #000);
 	transition-duration: 0.6s;
 	}
 
+	header .container .hamb
+{
+	display: none;
+	position: relative;
+}
+
 .bloque-inicio {
 	position: absolute;
-    top: 40%;
+    top: 30%;
     left: 50%;
     width: 400px;
     text-align: center;
@@ -45,6 +98,7 @@ body
     backdrop-filter: blur(3px);
     color: #fff;
     filter: drop-shadow(5px 5px 5px #000);
+    font-size: 40px;
 }
 
 .bloque-inicio a {
@@ -62,18 +116,18 @@ body
 h1
 {
 	color: #fff;
-	font-size: 50px;	
+	font-size: 60px;	
 }
 h1 b
 {
 	color: #fff;
-	font-size: 50px;	
+	font-size: 60px;	
 }
 
 h1 b:hover
 {
 	color: #81daff;
-	font-size: 55px;
+	font-size: 65px;
 	transition: 0.4s;
 	filter: drop-shadow(5px 5px 5px #000);	
 }
@@ -169,7 +223,7 @@ footer .redes
 
 footer .redes a
 {
-	margin: 0 1px;
+	margin: 0 7.5px;
 }
 
 footer .redes {
@@ -215,28 +269,74 @@ a{
 	text-decoration: none;
 }
 
+.container
+{
+	width: 100%;
+	margin: 0 auto 0 auto;
+	padding-right: 50px;
+	padding-left: 50px;
+	position: relative;
+}
 
 
-@media (max-width: 869px){
+@media (max-width: 1070px){
+	body .bloque-inicio{
+	top: 30%;
+}
 
+header .container .hamb
+	{
+		display: block;
+		font-size: 40px;
+		color: #000;
+	}
+
+	header .container nav 
+	{
+		position: fixed;
+		width: 100%;
+		height: 700px;
+		background-color: white;
+		padding-top: 80px;
+		padding-bottom: 80px;
+		padding-right: 15px;
+		padding-left: 15px;
+		top: 0;
+		left: 0;
+		display: flex;
+		flex-direction: column;
+		transition: all 0.4s ease;
+		transform: translateX(100%);
+	}
+
+	header .container nav.open 
+	{
+		transform: translateX(0);
+	}
+
+	header .container nav a
+	{
+		font-size: 30px;
+		margin: 15px 0;
+	}
+	
 
 .bloque-inicio{
-	position: absolute;       
-    text-align: center;  
-    color: #fff;
-    width: 380px;    
+	   
     backdrop-filter: none;
-    filter: drop-shadow(5px 5px 5px #000);
+
 }
 
 .slider img {
-	width: 100%;
+	width: 150%;
 	display: block;
 	top: 83px;
 	height: 100vh;
 	}
 
-
+.ajuste-perfecto {
+	padding: px;
+}
 
 
 
@@ -246,3 +346,4 @@ a{
 
 
 }
+

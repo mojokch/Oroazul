@@ -22,18 +22,19 @@
 					<img src="img/logo1.png" class="logo">
 				</a>
 				<nav class="nav1">
-					<a href="#inicio">Inicio</a>
+					<a href="#">Inicio</a>
 					<a href="#nosotros">Nuestros Productos</a>
 					<a href="#clientes">Clientes</a>
 					<a href="#contactenos">Contáctenos</a>
 				</nav>
+				<a href="#" class="hamb"><i class="fas fa-bars"></i></a>
 			</div>
 	</header>
 	<main>
 		<div class="slider">
 				<ul>
-					<li><img class="ajuste-perfecto" src="img/usos (1).png" alt=""></li>
 					<li><img class="ajuste-perfecto" src="img/usos (2).png" alt=""></li>
+					<li><img class="ajuste-perfecto" src="img/usos (1).png" alt=""></li>
 					<li><img class="ajuste-perfecto" src="img/usos (8).png" alt=""></li>
 					<li><img class="ajuste-perfecto" src="img/usos (9).png" alt=""></li>
 				</ul>
@@ -127,6 +128,7 @@
 								</div>	
 					</div>
 	</footer>
-
+		<script src="js/jquery.js"></script>
+		<script src="js/funciones.js"></script>
 </body>
 </html>
