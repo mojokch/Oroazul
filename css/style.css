@@ -319,6 +319,12 @@ header .container .hamb
 		font-size: 30px;
 		margin: 15px 0;
 	}
+
+	header .container nav a:hover
+	{
+		font-size: 40px;
+		margin: 15px 0;
+	}
 	
 
 .bloque-inicio{
