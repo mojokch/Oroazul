@@ -32,29 +32,6 @@
             top: 0;
             left: 0;
         }
-        #detected-objects {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            width: 100%;
-            max-width: 640px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        #detected-objects h2 {
-            margin-top: 0;
-            color: #333;
-        }
-        #object-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        #object-list li {
-            margin-bottom: 5px;
-            padding: 5px;
-            background-color: #f9f9f9;
-            border-radius: 4px;
-        }
         #error-message {
             color: red;
             margin-top: 10px;
@@ -67,21 +44,15 @@
         <video id="webcam" width="640" height="480" autoplay playsinline muted></video>
         <canvas id="canvas" width="640" height="480"></canvas>
     </div>
-    <div id="detected-objects">
-        <h2>Objetos Detectados</h2>
-        <ul id="object-list"></ul>
-    </div>
     <div id="error-message"></div>
 
     <script>
         const video = document.getElementById('webcam');
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-        const objectList = document.getElementById('object-list');
         const errorMessage = document.getElementById('error-message');
 
         let model;
-        let detectedObjects = new Map();
 
         // Cargar el modelo COCO-SSD
         async function loadModel() {
@@ -126,25 +97,10 @@
                     ctx.fillStyle = '#00FFFF';
                     ctx.font = '16px Arial';
                     ctx.fillText(`${prediction.class} - ${Math.round(prediction.score * 100)}%`, x, y > 10 ? y - 5 : 10);
-                    
-                    if (!detectedObjects.has(prediction.class)) {
-                        detectedObjects.set(prediction.class, new Date().toLocaleTimeString());
-                        updateObjectList();
-                    }
                 });
             } catch (error) {
                 console.error('Error en la detección de objetos:', error);
             }
-        }
-
-        // Actualizar la lista de objetos detectados
-        function updateObjectList() {
-            objectList.innerHTML = '';
-            detectedObjects.forEach((time, object) => {
-                const li = document.createElement('li');
-                li.textContent = `${object} - Detectado por primera vez a las ${time}`;
-                objectList.appendChild(li);
-            });
         }
 
         // Iniciar el bucle de detección
