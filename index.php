@@ -64,7 +64,7 @@
 <body>
     <h1>Detección de Objetos en Tiempo Real</h1>
     <div id="video-container">
-        <video id="webcam" width="640" height="480" autoplay></video>
+        <video id="webcam" width="640" height="480" autoplay playsinline muted></video>
         <canvas id="canvas" width="640" height="480"></canvas>
     </div>
     <div id="detected-objects">
@@ -99,11 +99,13 @@
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 video.srcObject = stream;
-                await video.play();
-                loadModel();
+                video.onloadedmetadata = () => {
+                    video.play();
+                    loadModel(); // Cargar el modelo cuando el video esté listo
+                };
             } catch (error) {
                 console.error('Error al acceder a la cámara:', error);
-                errorMessage.textContent = 'Error al acceder a la cámara web. Por favor, asegúrese de que tiene una cámara conectada y ha dado permiso para usarla.';
+                errorMessage.textContent = 'Error al acceder a la cámara web. Por favor, asegúrate de que tienes una cámara conectada y has dado permiso para usarla.';
             }
         }
 
