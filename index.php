@@ -18,43 +18,57 @@
         }
         h1 {
             color: #333;
-            text-align: center;
         }
         #video-container {
             position: relative;
             margin-bottom: 20px;
-            max-width: 100%;
         }
-        #webcam, #canvas {
+        #webcam {
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+        #canvas {
             position: absolute;
             top: 0;
             left: 0;
-            max-width: 100%;
-            height: auto;
         }
         #detected-objects {
             background-color: white;
+            border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+            padding: 15px;
             width: 100%;
+            max-width: 640px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #detected-objects h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        #object-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        #object-list li {
+            margin-bottom: 5px;
+            padding: 5px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
         }
         #error-message {
             color: red;
-            margin-top: 20px;
-            text-align: center;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <h1>Detección de Objetos en Tiempo Real</h1>
     <div id="video-container">
-        <video id="webcam" autoplay playsinline></video>
-        <canvas id="canvas"></canvas>
+        <video id="webcam" width="640" height="480" autoplay></video>
+        <canvas id="canvas" width="640" height="480"></canvas>
     </div>
     <div id="detected-objects">
-        <h2>Objetos Detectados:</h2>
+        <h2>Objetos Detectados</h2>
         <ul id="object-list"></ul>
     </div>
     <div id="error-message"></div>
@@ -69,92 +83,76 @@
         let model;
         let detectedObjects = new Map();
 
-        // Traducción de clases de objetos al español
-        const translations = {
-            'person': 'persona', 'bicycle': 'bicicleta', 'car': 'coche', 'motorcycle': 'motocicleta',
-            'airplane': 'avión', 'bus': 'autobús', 'train': 'tren', 'truck': 'camión', 'boat': 'barco',
-            'traffic light': 'semáforo', 'fire hydrant': 'boca de incendios', 'stop sign': 'señal de stop',
-            'parking meter': 'parquímetro', 'bench': 'banco', 'bird': 'pájaro', 'cat': 'gato', 'dog': 'perro',
-            'horse': 'caballo', 'sheep': 'oveja', 'cow': 'vaca', 'elephant': 'elefante', 'bear': 'oso',
-            'zebra': 'cebra', 'giraffe': 'jirafa', 'backpack': 'mochila', 'umbrella': 'paraguas',
-            'handbag': 'bolso', 'tie': 'corbata', 'suitcase': 'maleta', 'frisbee': 'frisbee',
-            'skis': 'esquís', 'snowboard': 'snowboard', 'sports ball': 'pelota deportiva',
-            'kite': 'cometa', 'baseball bat': 'bate de béisbol', 'baseball glove': 'guante de béisbol',
-            'skateboard': 'monopatín', 'surfboard': 'tabla de surf', 'tennis racket': 'raqueta de tenis',
-            'bottle': 'botella', 'wine glass': 'copa de vino', 'cup': 'taza', 'fork': 'tenedor',
-            'knife': 'cuchillo', 'spoon': 'cuchara', 'bowl': 'bol', 'banana': 'plátano', 'apple': 'manzana',
-            'sandwich': 'sándwich', 'orange': 'naranja', 'broccoli': 'brócoli', 'carrot': 'zanahoria',
-            'hot dog': 'perrito caliente', 'pizza': 'pizza', 'donut': 'donut', 'cake': 'pastel',
-            'chair': 'silla', 'couch': 'sofá', 'potted plant': 'planta en maceta', 'bed': 'cama',
-            'dining table': 'mesa de comedor', 'toilet': 'inodoro', 'tv': 'televisión', 'laptop': 'portátil',
-            'mouse': 'ratón', 'remote': 'mando a distancia', 'keyboard': 'teclado', 'cell phone': 'teléfono móvil',
-            'microwave': 'microondas', 'oven': 'horno', 'toaster': 'tostadora', 'sink': 'fregadero',
-            'refrigerator': 'nevera', 'book': 'libro', 'clock': 'reloj', 'vase': 'jarrón', 'scissors': 'tijeras',
-            'teddy bear': 'oso de peluche', 'hair drier': 'secador de pelo', 'toothbrush': 'cepillo de dientes'
-        };
-
         // Cargar el modelo COCO-SSD
-        cocoSsd.load().then((loadedModel) => {
-            model = loadedModel;
-            console.log('Modelo COCO-SSD cargado');
-        }).catch((error) => {
-            console.error('Error al cargar el modelo:', error);
-            errorMessage.textContent = 'Error al cargar el modelo de detección de objetos.';
-        });
-
-        // Acceder a la cámara web
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-            .then((stream) => {
-                video.srcObject = stream;
-                video.onloadedmetadata = () => {
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    video.play();
-                    detectObjects();
-                };
-            })
-            .catch((error) => {
-                console.error('Error al acceder a la cámara:', error);
-                errorMessage.textContent = 'Error al acceder a la cámara. Por favor, asegúrate de que tienes una cámara conectada y has dado permiso para usarla.';
-            });
-
-        function detectObjects() {
-            if (model) {
-                model.detect(video).then((predictions) => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                    predictions.forEach((prediction) => {
-                        const [x, y, width, height] = prediction.bbox;
-                        const spanishClass = translations[prediction.class] || prediction.class;
-                        const label = `${spanishClass} (${Math.round(prediction.score * 100)}%)`;
-
-                        ctx.strokeStyle = '#00FFFF';
-                        ctx.lineWidth = 2;
-                        ctx.strokeRect(x, y, width, height);
-
-                        ctx.fillStyle = '#00FFFF';
-                        ctx.font = '16px Arial';
-                        ctx.fillText(label, x, y > 20 ? y - 5 : y + 20);
-
-                        if (!detectedObjects.has(spanishClass)) {
-                            detectedObjects.set(spanishClass, new Date().toLocaleTimeString());
-                            updateObjectList();
-                        }
-                    });
-                });
+        async function loadModel() {
+            try {
+                model = await cocoSsd.load();
+                startDetection();
+            } catch (error) {
+                console.error('Error al cargar el modelo:', error);
+                errorMessage.textContent = 'Error al cargar el modelo de detección de objetos.';
             }
-            requestAnimationFrame(detectObjects);
         }
 
+        // Iniciar la cámara web
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                await video.play();
+                loadModel();
+            } catch (error) {
+                console.error('Error al acceder a la cámara:', error);
+                errorMessage.textContent = 'Error al acceder a la cámara web. Por favor, asegúrese de que tiene una cámara conectada y ha dado permiso para usarla.';
+            }
+        }
+
+        // Realizar la detección de objetos
+        async function detectObjects() {
+            if (!model) return;
+            
+            try {
+                const predictions = await model.detect(video);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                predictions.forEach(prediction => {
+                    const [x, y, width, height] = prediction.bbox;
+                    ctx.strokeStyle = '#00FFFF';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(x, y, width, height);
+                    
+                    ctx.fillStyle = '#00FFFF';
+                    ctx.font = '16px Arial';
+                    ctx.fillText(`${prediction.class} - ${Math.round(prediction.score * 100)}%`, x, y > 10 ? y - 5 : 10);
+                    
+                    if (!detectedObjects.has(prediction.class)) {
+                        detectedObjects.set(prediction.class, new Date().toLocaleTimeString());
+                        updateObjectList();
+                    }
+                });
+            } catch (error) {
+                console.error('Error en la detección de objetos:', error);
+            }
+        }
+
+        // Actualizar la lista de objetos detectados
         function updateObjectList() {
             objectList.innerHTML = '';
             detectedObjects.forEach((time, object) => {
                 const li = document.createElement('li');
-                li.textContent = `${object} - Detectado por primera vez: ${time}`;
+                li.textContent = `${object} - Detectado por primera vez a las ${time}`;
                 objectList.appendChild(li);
             });
         }
+
+        // Iniciar el bucle de detección
+        function startDetection() {
+            detectObjects();
+            setTimeout(startDetection, 500); // 2 FPS
+        }
+
+        // Iniciar la aplicación
+        startCamera();
     </script>
 </body>
 </html>
